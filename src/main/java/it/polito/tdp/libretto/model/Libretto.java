@@ -1,6 +1,8 @@
 package it.polito.tdp.libretto.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Libretto {
@@ -89,17 +91,44 @@ public class Libretto {
 	}
 	
 	public void cancellaVotiInferiori(int punti) {
+		List<Voto> daCancellare = new ArrayList<Voto>();
 		for(Voto v: this.voti) {
 			if(v.getPunti()<punti) {
-				this.voti.remove(v) ;
+				daCancellare.add(v) ;
 			}
 		}
 		
-//		for(int i=0; i<this.voti.size(); i++) {
-//			if(this.voti.get(i).getPunti()<punti) {
-//				this.voti.remove(i);
-//			}
-//		}
+		this.voti.removeAll(daCancellare);
+	
+	}
+	
+	public Libretto librettoOrdinatoAlfabeticamente() {
+		Libretto ordinato = new Libretto();
+		ordinato.voti = new ArrayList<>(this.voti);
+		ordinato.voti.sort(new ComparatorByName());
+		return ordinato;
+	}
+	
+	public Libretto librettoOrdinatoPerVoto() {
+		Libretto ordinato = new Libretto();
+		ordinato.voti = new ArrayList<>(this.voti);
+		
+		ordinato.voti.sort(new Comparator<Voto>(){
+			public int compare(Voto o1, Voto o2) {
+				return o2.getPunti()-o1.getPunti();
+			}
+			
+		});
+		
+		return ordinato;
+	}
+	
+	public String toString() {
+		String txt = "";
+		for (Voto v : this.voti) {
+			txt = txt+v.toString()+"\n";
+		}
+		return txt;
 	}
 	
 }
