@@ -19,6 +19,7 @@ public class Controller {
 
 	public void setModel(Libretto model) {
 		this.model = model;
+		this.txtResult.setText(this.model.toString());
 	}
 	
 	@FXML
@@ -62,6 +63,7 @@ public class Controller {
         for(int p=18;p<=30;p++) {
         	this.comboPunti.getItems().add(p);
         }
+        
         
         
     }
